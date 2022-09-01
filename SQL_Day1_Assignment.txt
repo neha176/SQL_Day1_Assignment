@@ -1,0 +1,124 @@
+--SQL Day1 Assignment by Neha Kiran--
+
+create database ITfirm;
+use ITfirm;
+
+--Clients Table
+create table Clients(
+Client_ID int(5) primary key,
+Cname varchar(40) not null,
+Address varchar(30),
+Email varchar(30),
+Phone int(10),
+Business varchar(20) not null,
+CONSTRAINT eunique UNIQUE(Email))
+
+--Inserting records in Clients Table
+insert into Clients values
+(1001 ,'ACME Utilities', 'Noida', 'contact@acmeutil.com', 9567880032, 'Manufacturing'),
+(1002 ,'Trackon Consultants', 'Mumbai', 'consult@trackon.com', 8734210090, 'Consultant'),
+(1003 ,'MoneySaver Distributors', 'Kolkata', 'save@moneysaver.com', 7799886655, 'Reseller'),
+(1004 ,'Lawful Corp', 'Chennai', 'justice@lawful.com' ,9210342219, 'Professional')
+
+select * from Clients
+
+--Departments Table
+Create table Departments(
+Deptno int primary key,
+Dname varchar(15) not null,
+Loc varchar(20))
+
+--Inserting records in Departments Table
+insert into Departments values
+(10 ,'Design' ,'Pune'),
+(20 ,'Development' ,'Pune'),
+(30 ,'Testing' ,'Mumbai'),
+(40 ,'Document' ,'Mumbai')
+
+select * from Departments
+
+
+--Employees Table
+Create table Employees(
+Empno int primary key,
+Ename varchar(20) not null,
+Job varchar(15),
+Salary int,
+Deptno int references Departments(Deptno),
+CONSTRAINT check_salary CHECK(Salary>0) )
+
+--Inserting records in Employees Table
+insert into Employees values
+(7001, 'Sandeep', 'Analyst', 25000 ,10),
+(7002 ,'Rajesh' ,'Designer' ,30000, 10),
+(7003 ,'Madhav' ,'Developer' ,40000 ,20),
+(7004 ,'Manoj' ,'Developer' ,40000, 20),
+(7005 ,'Abhay' ,'Designer' ,35000 ,10),
+(7006 ,'Uma' ,'Tester' ,30000 ,30),
+(7007 ,'Gita' ,'Tech.Writer' ,30000 ,40),
+(7008 ,'Priya' ,'Tester' ,35000 ,30),
+(7009, 'Nutan' ,'Developer', 45000, 20),
+(7010, 'Smita', 'Analyst', 20000, 10),
+(7011, 'Anand', 'Project Mgr', 65000, 10)
+
+select * from Employees
+
+
+
+--Projects Table
+Create table Projects(
+Project_ID int primary key,
+Descr varchar(30) not null,
+Start_date DATE,
+Planned_end_date DATE,
+Actual_end_date DATE,
+Budget int,
+Client_ID int references Clients(Client_ID),
+CONSTRAINT check_date CHECK (Actual_end_date>Planned_end_date AND Budget>0))
+
+--Inserting records in Projects Table
+insert into Projects values(401, 'Inventory', '01-Apr-11', '01-Oct-11', '31-Oct-11' ,150000, 1001)
+
+insert into Projects(Project_ID ,Descr,Start_date,Planned_end_date,Budget,Client_ID) values
+(402, 'Accounting', '01-Aug-11', '01-Jan-12', 500000, 1002),
+(403, 'Payroll', '01-Oct-11', '31-Dec-11' ,75000, 1003),
+(404, 'Contact Mgmt' ,'01-Nov-11', '31-Dec-11', 50000, 1004)
+
+select * from Projects
+
+--EmpProjectTasks Table
+
+Create table EmpProjectTasks(
+
+Project_ID int,
+Empno int,
+
+PRIMARY KEY(Project_ID,Empno) ,
+foreign key(Project_ID) references Projects(Project_ID),
+foreign key(Empno) references Employees(Empno),
+
+Start_date DATE,
+End_date DATE,
+Task varchar(25) not null,
+Status varchar(15) not null)
+
+--Inserting records in EmpProjectTasks Table
+
+insert into EmpProjectTasks values
+(401, 7001, '01-Apr-11', '20-Apr-11', 'System Analysis', 'Completed'),
+(402 ,7002 ,'21-Apr-11' ,'30-May-11' ,'System Design', 'Completed'),
+(403, 7003, '01-Jun-11', '15-Jul-11', 'Coding', 'Completed'),
+(404 ,7004 ,'18-Jul-11' ,'01-Sep-11' ,'Coding' ,'Completed'),
+(405, 7006, '03-Sep-11', '15-Sep-11', 'Testing', 'Completed'),
+(406 ,7009 ,'18-Sep-11' ,'05-Oct-11' ,'Code Change' ,'Completed'),
+(407 ,7008 ,'06-Oct-11' ,'16-Oct-11' ,'Testing' ,'Completed'),
+(408, 7007, '06-Oct-11', '22-Oct-11', 'Documentation', 'Completed'),
+(409 ,7011 ,'22-Oct-11' ,'31-Oct-11' ,'Sign off' ,'Completed'),
+(410 ,7010 ,'01-Aug-11' ,'20-Aug-11' ,'System Analysis', 'Completed'),
+(411, 7002, '22-Aug-11', '30-Sep-11', 'System Design' ,'Completed')
+
+insert into EmpProjectTasks(Project_ID,Empno ,Start_date,Task ,Status) values(412, 7004, '01-Oct-11', 'Coding In','Progress')
+
+select * from EmpProjectTasks
+
+
