@@ -73,7 +73,7 @@ Start_date DATE,
 Planned_end_date DATE,
 Actual_end_date DATE,
 Budget int,
-Client_ID int references Clients(Client_ID),
+Client_ID Bigint references Clients(Client_ID),
 CONSTRAINT check_date CHECK (Actual_end_date>Planned_end_date AND Budget>0))
 
 --Inserting records in Projects Table
