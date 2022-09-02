@@ -5,11 +5,11 @@ use ITfirm;
 
 --Clients Table
 create table Clients(
-Client_ID int(5) primary key,
+Client_ID Bigint primary key,
 Cname varchar(40) not null,
 Address varchar(30),
 Email varchar(30),
-Phone int(10),
+Phone Bigint,
 Business varchar(20) not null,
 CONSTRAINT eunique UNIQUE(Email))
 
