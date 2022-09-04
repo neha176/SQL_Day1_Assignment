@@ -49,7 +49,7 @@ SELECT * FROM DPT
 SELECT ENAME FROM EMP WHERE ENAME LIKE'A%'
 
 --2. Select all those employees who don't have a manager.
-SELECT ENAME FROM EMP WHERE MGR_ID =NULL
+SELECT ENAME FROM EMP WHERE MGR_ID IS NULL
 
 --3. List employee name, number and salary for those employees who earn in the range 1200 to 1400. 
 SELECT ENAME,EMPNO,SAL FROM EMP WHERE SAL BETWEEN 1200 AND 1400
@@ -80,7 +80,7 @@ SELECT ENAME,SAL FROM EMP WHERE ENAME IN('MILLER','SMITH')
 --OR
 SELECT ENAME,SAL FROM EMP WHERE ENAME='MILLER' UNION (SELECT ENAME,SAL FROM EMP WHERE ENAME='SMITH')
 
---12. Find out the names of the employees whose name begin with ‘A’ or ‘M’. 
+--12. Find out the names of the employees whose name begin with â€˜Aâ€™ or â€˜Mâ€™. 
 SELECT ENAME FROM EMP WHERE ENAME LIKE '[AM]%'
 
 --13. Compute yearly salary of SMITH. 
